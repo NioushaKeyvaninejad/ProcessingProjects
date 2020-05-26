@@ -24,6 +24,7 @@ class Runner {
 
   void move() {
     y-=yspeed;
+    
   }
 
   void speed() {

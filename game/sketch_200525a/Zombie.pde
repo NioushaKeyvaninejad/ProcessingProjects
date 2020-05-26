@@ -1,6 +1,6 @@
 class Zombie {
 
-  float x=random(width);
+  float x;
   float y=random(height);
   //float xpos=width/2;
   //float ypos=height/2;
@@ -11,6 +11,13 @@ class Zombie {
   Zombie() {
 
 
+if(random(width)<width/2){
+ x=0;}
+ else{
+   
+   x=width;
+  
+}
     xspeed = random(-5, 5);
     yspeed =random(-5, 5);
   }
