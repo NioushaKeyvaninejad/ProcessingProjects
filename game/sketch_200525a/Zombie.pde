@@ -11,13 +11,12 @@ class Zombie {
   Zombie() {
 
 
-if(random(width)<width/2){
- x=0;}
- else{
-   
-   x=width;
-  
-}
+    if (random(width)<width/2) {
+      x=0;
+    } else {
+
+      x=width;
+    }
     xspeed = random(-5, 5);
     yspeed =random(-5, 5);
   }
@@ -56,5 +55,21 @@ if(random(width)<width/2){
     } else {
       return false;
     }
+  }
+  void death(int px,int py) {
+    print(x, "   ");
+    //if(mousePressed){
+    float distance2 = dist(x+50, y+50, px, py);
+
+    //if (px>x && px<x+300 && py>y && py<y+300 ){
+    if (distance2<100) {
+
+   
+      x=200000;
+      
+    }
+    
+    //}
+   
   }
 }

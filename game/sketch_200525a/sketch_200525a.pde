@@ -33,8 +33,16 @@ void draw() {
     zombies[i].move();
     zombies[i].display();
     zombies[i].speed();
+
     if (zombies[i].hit(runner)) {
       runner.bleed();
     }
+  }
+}
+
+void mousePressed() {
+  for (int i=0; i<zombies.length; i++) {
+    
+    zombies[i].death(mouseX,mouseY);
   }
 }
