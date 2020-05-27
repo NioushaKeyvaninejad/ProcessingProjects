@@ -21,7 +21,7 @@ class Runner {
 
   void display() {
     fill(255);
-    ellipse(x, y, 100, 100);
+    ellipse(x, y, 50, 50);
     // y-=yspeed;
   }
 
