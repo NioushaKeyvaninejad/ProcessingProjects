@@ -56,7 +56,7 @@ class Zombie {
       return false;
     }
   }
-  void death(int px,int py) {
+  void death(int px, int py) {
     print(x, "   ");
     //if(mousePressed){
     float distance2 = dist(x+50, y+50, px, py);
@@ -64,12 +64,10 @@ class Zombie {
     //if (px>x && px<x+300 && py>y && py<y+300 ){
     if (distance2<100) {
 
-   
+
       x=200000;
-      
     }
-    
+
     //}
-   
   }
 }
