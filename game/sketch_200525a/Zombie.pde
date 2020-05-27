@@ -1,7 +1,7 @@
 class Zombie {
 
   float x;
-  float y=random(height);
+  float y=random(height-200);
   //float xpos=width/2;
   //float ypos=height/2;
   float xspeed;
@@ -29,7 +29,7 @@ class Zombie {
     if (x>width || x<0) {
       xspeed*=-1;
     }
-    if (y>height || y<0) {
+    if (y>height-200 || y<0) {
       yspeed*=-1;
     }
   }

@@ -2,42 +2,42 @@ Runner runner;
 //Zombie zombie;
 
 Zombie[] zombies ;
+Wall[] walls;
 
-
+float x=100;
 void setup() {
   size(2000, 1600);
   zombies = new Zombie[10];
   runner = new Runner();
+    walls = new Wall[1];
   for (int i=0; i<zombies.length; i++) {
     zombies[i] = new Zombie();
   }
-}
+  for(int i=0;i<walls.length;i++){
+    walls[i]=new Wall();
+}}
 
 void draw() {
   background(0, 0, 128);
-  fill(255, 0, 0);
-  // rect(1000, 1500, 200, 20);
-    rect(800, 1300, 200, 20);
-     rect(1000, 1100, 200, 20);
-      rect(800, 900, 200, 20);
-       rect(1000, 700, 200, 20);
-  rect(800, 500, 200, 20);
-rect(1000, 300, 200, 20);
-  rect(800, 100, 200, 20);
+   fill(255, 0, 0);
+   for(int k=0; k<3;k++){
+   ellipse(x+110*k,1550,100,100);
+   }
   
-    rect(1400, 1300, 200, 20);
-     rect(1400, 900, 200, 20);
-       rect(1400, 500, 200, 20);
-rect(1400, 100, 200, 20);
- // rect(1700, 100, 200, 20);
-
-
-
+ 
 
 
   runner.display();
   runner.speed();
   runner.move();
+    for(int i=0;i<walls.length;i++){
+  walls[i].display();
+  walls[i].move();
+  if (runner.hit(walls[i])){
+    
+    
+  }
+  }
   //runner.setLocation(width/2,height-100);
   for (int i=0; i<zombies.length; i++) {
     zombies[i].move();
@@ -50,7 +50,7 @@ rect(1400, 100, 200, 20);
       text("Game Over",width/2-250,height/2);
      
       //setup();
-    }
+    } 
   }
 }
 

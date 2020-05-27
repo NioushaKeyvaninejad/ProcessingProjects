@@ -1,6 +1,6 @@
 class Runner {
   float x=width/2;
-  float y=height-100;
+  float y=height-50;
   float yspeed;
   float xspeed;
 
@@ -41,6 +41,16 @@ class Runner {
       }
       print(y, "  ");
     }
+  }
+  
+  
+   boolean hit(Wall walls) {
+    float distance = dist(x, y, walls.x, walls.y);
+    if (distance<100) {
+    return true;
+    } else {
+     return false;
+  }
   }
 
   void speed() {
