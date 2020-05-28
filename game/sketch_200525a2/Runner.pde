@@ -7,14 +7,12 @@ class Runner {
   Runner() {
     yspeed = 8;
     xspeed = 8;
+   
   }
 
 
 
-  // void setLocation(float tempX, float tempY) {
-  //x = tempX;
-  //y = tempY;
-  //}
+
 
 
 
@@ -22,44 +20,72 @@ class Runner {
   void display() {
     fill(255);
     ellipse(x, y, 50, 50);
-    // y-=yspeed;
   }
+
+
 
   void move() {
     if ((keyPressed == true)) {
       if (keyCode==RIGHT) {
         x+=xspeed ;
-        //yspeed=0;
       }
       if (keyCode==LEFT) {
         x-=xspeed;
-        //yspeed=0;
       }
       if (keyCode==UP) {
-        //xspeed=0;
+
         y-=yspeed;
       }
-      print(y, "  ");
     }
   }
 
 
+
+
   boolean hit(Wall walls) {
-    float distance = dist(x, y, walls.x, walls.y);
-    if (distance<100) {
+      boolean mm=false;
+
+    //println (walls.x[0], "  ", walls.x[1], "  ", walls.x[2], "  ", walls.x[3], "  ", walls.x[4], "  ", x, "  ");
+
+    for (int i=1; i<7; i++) {
+      //float distance = dist(x, y, walls.x[i], walls.y[i]);
+      if (y>(walls.y[i]) && y<(walls.y[i]+20)) {
+        if (x>(walls.x[i]) && x<(walls.x[i]+200)) {
+      //print(distance, "");
+      //if (distance<100) {
+        mm=true;
+      //}
+        }
+      }
+    }
+    if (mm==true) {
       return true;
-    } else {
+    } else { 
       return false;
     }
   }
 
+
+
+
+
   void speed() {
   }
+
+
 
 
   void bleed() {
 
     fill(255, 0, 0);
     ellipse(x, y, 100, 100);
+  }
+  
+  
+  void reset(){
+   x=width/2;
+ y=height-50;
+    
+    
   }
 }
