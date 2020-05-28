@@ -1,7 +1,7 @@
 Runner runner;
 Zombie[] zombies ;
 Wall[] walls;
-//Lives[] lives;
+Timer timer;
 
 
 //int m=3;
@@ -19,7 +19,8 @@ void setup() {
   zombies = new Zombie[10];
   runner = new Runner();
   walls = new Wall[1];
-  // lives = new Lives[m];
+  timer=new Timer(500);
+  timer.start();
 
   for (int i=0; i<zombies.length; i++) {
     zombies[i] = new Zombie();
@@ -49,6 +50,7 @@ void draw() {
   //  lives[i].display(mn);
   // }
 
+timer.start();
   for (int i=0; i<walls.length; i++) {
     walls[i].display();
     walls[i].move();
@@ -87,6 +89,7 @@ void draw() {
   //runner.setLocation(width/2,height-100);
 
   for (int i=0; i<zombies.length; i++) {
+   if (timer.isFinished()){
     zombies[i].move();
     zombies[i].display();
     zombies[i].speed();
@@ -94,6 +97,10 @@ void draw() {
 if (iteration>(it+50)) {
     if (zombies[i].hit(runner)) {
       runner.bleed();
+      //fill(255,0,0);
+      //textSize(100);
+      //textAlign(CENTER,CENTER);
+      //text("Game Over",width/2,height/2);
       eN++;
         if(eN==1){ 
           it=iteration;
@@ -108,8 +115,8 @@ if (iteration>(it+50)) {
          }
           if(eN==3){ 
          e1=10000; 
-         it=iteration;
-         if (eN==4){
+         it=iteration;}
+         if (eN>3){
         fill(255,0,0);
       textSize(100);
       textAlign(CENTER,CENTER);
@@ -124,10 +131,11 @@ if (iteration>(it+50)) {
 //runner.reset();
       //setup();
     }
+    timer.start();
   }
+
+
 }
-
-
 
 
 
