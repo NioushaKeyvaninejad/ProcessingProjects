@@ -9,21 +9,12 @@ class Runner {
     xspeed = 8;
   }
 
-
-
-
-
-
-
-
   void display() {
     fill(255);
     ellipse(x, y, 50, 50);
   }
 
-
-
-  void move() {
+  void move() {                       //arrowkeys functionality
     if ((keyPressed == true)) {
       if (keyCode==RIGHT) {
         x+=xspeed ;
@@ -47,22 +38,13 @@ class Runner {
     }
   }
 
-
-
-
-  boolean hit(Wall walls) {
+  boolean hit(Wall walls) {            //if the runner hits a wall
     boolean mm=false;
 
-    //println (walls.x[0], "  ", walls.x[1], "  ", walls.x[2], "  ", walls.x[3], "  ", walls.x[4], "  ", x, "  ");
-
     for (int i=1; i<7; i++) {
-      //float distance = dist(x, y, walls.x[i], walls.y[i]);
       if (y>(walls.y[i]) && y<(walls.y[i]+20)) {
         if (x>(walls.x[i]) && x<(walls.x[i]+200)) {
-          //print(distance, "");
-          //if (distance<100) {
           mm=true;
-          //}
         } else if (x>(walls.a[i]-200) && x<(walls.a[i])) {
           mm=true;
         }
@@ -75,24 +57,12 @@ class Runner {
     }
   }
 
-
-
-
-
-  void speed() {
-  }
-
-
-
-
-  void bleed() {
-
-    fill(255, 0, 0);
+  void bleed() {                         //if the runner hits a zombie its color 
+    fill(255, 0, 0);                     //changes to red
     ellipse(x, y, 100, 100);
   }
 
-
-  void reset() {
+  void reset() {                          //goes back to the start point
     x=width/2;
     y=height-50;
   }

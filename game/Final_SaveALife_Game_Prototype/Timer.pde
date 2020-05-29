@@ -8,7 +8,6 @@ class Timer {   //with the aid of: (Shiffman-pg:201 && 213)
     totalTime=tempTotalTime;
   }
 
-
   void start() {
     savedTime=millis();
   }

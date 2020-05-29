@@ -23,12 +23,12 @@ int kj=0;
 
 void setup() {
   size(2000, 1600);
-  zombies = new Zombie[200];
+  zombies = new Zombie[200];              // An array of 200 zombies
   runner = new Runner();
   resetButton = new Button(50, 1525);
-  walls = new Wall[1];
-  timer=new Timer(5000);
-  timer2=new Timer(2000);
+  walls = new Wall[1];                    
+  timer=new Timer(5000);                  //release zombies every 5"
+  timer2=new Timer(2000);                 //keep "Game Over" txt for 2"
   timer.start();
 
   for (int i=0; i<zombies.length; i++) {
@@ -40,29 +40,28 @@ void setup() {
 }
 
 void draw() {
-  iteration++;
+  iteration++;                           //for having a delay 
   background(0, 0, 128);
   fill(255, 0, 0);
-  ellipse(e1, 1500, 100, 100);
+  ellipse(e1, 1500, 100, 100);           //lives prototype
   ellipse(e2, 1500, 100, 100);
   ellipse(e3, 1500, 100, 100);
   fill(0, 255, 0);
-  rect(width/2-20, 0, 100, 100);
+  rect(width/2-20, 0, 100, 100);         //safe zone prototype
 
   for (int i=0; i<walls.length; i++) {
     walls[i].display();
     walls[i].move();
-    if (runner.hit(walls[i])) {
+    if (runner.hit(walls[i])) {          //if runner hits a wall
       runner.reset();
     }
   }
 
   runner.display();
-  runner.speed();
   runner.move();
   resetButton.display();
 
-  if (timer.isFinished(tc)) {
+  if (timer.isFinished(tc)) {                           //release of zombies
     tc++;
     if ((zombies.length/20)*(tc)>zombies.length) {
       tc=zombies.length/10;
@@ -72,9 +71,8 @@ void draw() {
   for (int i=0; i<(zombies.length/20)*(tc); i++) {
     zombies[i].move();
     zombies[i].display();
-    zombies[i].speed();
-    if (iteration>(it+50)) {
-      if (zombies[i].hit(runner)) {
+    if (iteration>(it+50)) {                            //for delay in removing hearts
+      if (zombies[i].hit(runner)) {                     //if runner hits a zombie
         runner.bleed();
         eN++;
         if (eN==1) { 
@@ -103,8 +101,8 @@ void draw() {
     textAlign(CENTER, CENTER);
     text("Game Over", width/2, height/2);
 
-    if (timer2.isFinished(1)) {
-      setup();
+    if (timer2.isFinished(1)) {                     //after "Game Over" txt for 2"
+      setup();                                      //Game resets
       eN=0;
       iteration=0;
       it=0;
@@ -115,7 +113,7 @@ void draw() {
       kj=0;
     }
   }
-
+                   //if runner is in the green rect, show "You Win!" txt
   if (runner.x>width/2-20 && runner.x<width/2+80 && runner.y>0 && runner.y<100) {
     fill(0, 255, 0);
     textSize(100);
@@ -125,11 +123,11 @@ void draw() {
 }
 
 void mousePressed() {
-  for (int i=0; i<zombies.length; i++) {
-    zombies[i].death(mouseX, mouseY);
-  }
-  resetButton.click(mouseX, mouseY);
-  if (resetButton.on) {
+  for (int i=0; i<zombies.length; i++) {              
+    zombies[i].death(mouseX, mouseY);             //if mouseclick on zombies,
+  }                                               //throw them away
+  resetButton.click(mouseX, mouseY);              //if clicked on reset button,
+  if (resetButton.on) {                           //Game resets
     eN=0;
     iteration=0;
     it=0;

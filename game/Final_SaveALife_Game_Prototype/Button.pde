@@ -1,4 +1,4 @@
-class Button {
+class Button {                  //Game reset button---from Brush exercise.
   float x;
   float y;
 
