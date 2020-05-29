@@ -7,7 +7,6 @@ class Runner {
   Runner() {
     yspeed = 8;
     xspeed = 8;
-   
   }
 
 
@@ -43,7 +42,7 @@ class Runner {
 
 
   boolean hit(Wall walls) {
-      boolean mm=false;
+    boolean mm=false;
 
     //println (walls.x[0], "  ", walls.x[1], "  ", walls.x[2], "  ", walls.x[3], "  ", walls.x[4], "  ", x, "  ");
 
@@ -51,10 +50,10 @@ class Runner {
       //float distance = dist(x, y, walls.x[i], walls.y[i]);
       if (y>(walls.y[i]) && y<(walls.y[i]+20)) {
         if (x>(walls.x[i]) && x<(walls.x[i]+200)) {
-      //print(distance, "");
-      //if (distance<100) {
-        mm=true;
-      //}
+          //print(distance, "");
+          //if (distance<100) {
+          mm=true;
+          //}
         }
       }
     }
@@ -80,12 +79,10 @@ class Runner {
     fill(255, 0, 0);
     ellipse(x, y, 100, 100);
   }
-  
-  
-  void reset(){
-   x=width/2;
- y=height-50;
-    
-    
+
+
+  void reset() {
+    x=width/2;
+    y=height-50;
   }
 }
