@@ -1,28 +1,34 @@
+//The runner has to reach the green spot on top of the screen. If the runner hit the 
+//walls, you have to start moving the runner again from the start point. By any zombie
+//attack, you will lose a life and you only have 3 lives. Don't forget to kill zombies
+//with mouse click because they are incresed every 5 seconds. click the green button 
+//if you want to reset the game. Only UP,RIGHT and LEFT arrow keys on keyboard work,
+//so you cannot move backward.
+
 Runner runner;
 Zombie[] zombies ;
 Wall[] walls;
-Timer timer;
+Timer timer;               //for zombies
+Timer timer2;              //for "Game Over" text
 Button resetButton;
 
-
-//int m=3;
-float x=100;
-int e1=100;
-int e2=200;
-int e3=300;
+int e1=100;                //ellipse1.x
+int e2=200;                //ellipse2.x
+int e3=300;                //ellipse3.x
 int eN=0;
-int yy=0;
 int iteration=0;
 int it=0;
-int time;
+int tc=0;
+int kj=0;
+
 void setup() {
   size(2000, 1600);
-  time=millis();
-  zombies = new Zombie[10];
+  zombies = new Zombie[200];
   runner = new Runner();
-  resetButton = new Button(25, 1525);
+  resetButton = new Button(50, 1525);
   walls = new Wall[1];
-  timer=new Timer(500);
+  timer=new Timer(5000);
+  timer2=new Timer(2000);
   timer.start();
 
   for (int i=0; i<zombies.length; i++) {
@@ -31,86 +37,49 @@ void setup() {
   for (int i=0; i<walls.length; i++) {
     walls[i]=new Wall(600, 100, 1000);
   }
-  //for (int i=0; i<lives.length; i++) {
-  //lives[i] = new Lives(100);
-  // }
 }
-
-
-
-
 
 void draw() {
   iteration++;
-  //print(iteration,"  ");
   background(0, 0, 128);
   fill(255, 0, 0);
   ellipse(e1, 1500, 100, 100);
   ellipse(e2, 1500, 100, 100);
   ellipse(e3, 1500, 100, 100);
+  fill(0, 255, 0);
+  rect(width/2-20, 0, 100, 100);
 
-  //  for (int i=0; i<lives.length; i++) {
-  //  lives[i].display(mn);
-  // }
-
-  timer.start();
   for (int i=0; i<walls.length; i++) {
     walls[i].display();
     walls[i].move();
-    //////  if (iteration>(it+50)) {
-
     if (runner.hit(walls[i])) {
-
-      // yy++;
-      // if (yy==1) {
       runner.reset();
-
-
-
-      //runner.move();
-      //  yy=0;
-      // }
-      ///// if (yy==2) {
-      /////    it=iteration;
-      /////    e2=10000;
-      /////   }
-      ///// if (yy==3) {
-      /////    it=iteration;
-      /////    e1=10000;
-      /////     }  
-      //    mn++;
-      //   print(mn, "   ");
-
-      //lives[i].display(mn);
-      ///// }
     }
   }
-  print(runner.x, "  ");
+
   runner.display();
   runner.speed();
   runner.move();
-
   resetButton.display();
-  //runner.setLocation(width/2,height-100);
 
-  for (int i=0; i<zombies.length; i++) {
-    //TIMERRRRR if (timer.isFinished()){
+  if (timer.isFinished(tc)) {
+    tc++;
+    if ((zombies.length/20)*(tc)>zombies.length) {
+      tc=zombies.length/10;
+    }
+  }
+  
+  for (int i=0; i<(zombies.length/20)*(tc); i++) {
     zombies[i].move();
     zombies[i].display();
     zombies[i].speed();
-
     if (iteration>(it+50)) {
       if (zombies[i].hit(runner)) {
         runner.bleed();
-        //fill(255,0,0);
-        //textSize(100);
-        //textAlign(CENTER,CENTER);
-        //text("Game Over",width/2,height/2);
         eN++;
         if (eN==1) { 
           it=iteration;
-          e3=10000; 
-          //eN=1;
+          e3=10000;
         }
         if (eN==2) { 
           e2=10000; 
@@ -120,35 +89,54 @@ void draw() {
           e1=10000; 
           it=iteration;
         }
-        if (eN>3) {
-          if ( millis() < time + 2000) {
-            fill(255, 0, 0);
-            textSize(100);
-            textAlign(CENTER, CENTER);
-            text("Game Over", width/2, height/2);
-          }
-
-          // setup();
-        }
-        /////      runner.reset();
-        /////   for (int i=0; i<zombies.length; i++) { 
-        ///// zombies[i].reset();}
-        //TIMERRRR }
       }
-
-
-      //runner.reset();
-      //setup();
     }
-    //TIMERRRR  timer.start();
+  }
+  if (eN>3) {
+    if (kj==0) {
+      timer2.start();
+      kj++;
+    }
+
+    fill(255, 0, 0);
+    textSize(100);
+    textAlign(CENTER, CENTER);
+    text("Game Over", width/2, height/2);
+
+    if (timer2.isFinished(1)) {
+      setup();
+      eN=0;
+      iteration=0;
+      it=0;
+      tc=0;
+      e1=100;
+      e2=200;
+      e3=300;
+      kj=0;
+    }
+  }
+
+  if (runner.x>width/2-20 && runner.x<width/2+80 && runner.y>0 && runner.y<100) {
+    fill(0, 255, 0);
+    textSize(100);
+    textAlign(CENTER, CENTER);
+    text("YOU WIN!", width/2, height/2);
   }
 }
-
-
 
 void mousePressed() {
   for (int i=0; i<zombies.length; i++) {
     zombies[i].death(mouseX, mouseY);
   }
   resetButton.click(mouseX, mouseY);
+  if (resetButton.on) {
+    eN=0;
+    iteration=0;
+    it=0;
+    tc=0;
+    e1=100;
+    e2=200;
+    e3=300;
+    kj=0;
+  }
 }

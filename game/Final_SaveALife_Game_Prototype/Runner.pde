@@ -27,13 +27,22 @@ class Runner {
     if ((keyPressed == true)) {
       if (keyCode==RIGHT) {
         x+=xspeed ;
+        if (x>1400) {
+          x=1400;
+        }
       }
       if (keyCode==LEFT) {
         x-=xspeed;
+        if (x<700) {
+          x=700;
+        }
       }
       if (keyCode==UP) {
 
         y-=yspeed;
+        if (y<25) {
+          y=25;
+        }
       }
     }
   }
@@ -54,6 +63,8 @@ class Runner {
           //if (distance<100) {
           mm=true;
           //}
+        } else if (x>(walls.a[i]-200) && x<(walls.a[i])) {
+          mm=true;
         }
       }
     }

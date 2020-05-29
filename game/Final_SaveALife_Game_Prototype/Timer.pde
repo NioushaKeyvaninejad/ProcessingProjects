@@ -13,9 +13,9 @@ class Timer {   //with the aid of: (Shiffman-pg:201 && 213)
     savedTime=millis();
   }
 
-  boolean isFinished() {
+  boolean isFinished(int nn) {
     passedTime=millis()-savedTime;
-    if (passedTime>totalTime) {
+    if (passedTime>(nn*totalTime)) {
       return true;
     } else {
       return false;

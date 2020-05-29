@@ -1,7 +1,7 @@
 class Zombie {
 
   float x;
-  float y=random(height-200);
+  float y=random(120, height-200);
   float xspeed;
   float yspeed;
 
@@ -28,7 +28,7 @@ class Zombie {
     if (x>width || x<0) {
       xspeed*=-1;
     }
-    if (y>height-200 || y<0) {
+    if (y>height-200 || y<120) {
       yspeed*=-1;
     }
   }
@@ -52,7 +52,7 @@ class Zombie {
 
   boolean hit(Runner runner) {
     float distance = dist(x, y, runner.x, runner.y);
-    if (distance<100) {
+    if (distance<75) {
       return true;
     } else {
       return false;
