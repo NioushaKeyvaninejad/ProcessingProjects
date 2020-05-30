@@ -1,4 +1,4 @@
-class Zombie {
+class Zombie {                         //with the aid of: (Shiffman-pg:213)
 
   float x;
   float y=random(120, height-200);     //range of movement

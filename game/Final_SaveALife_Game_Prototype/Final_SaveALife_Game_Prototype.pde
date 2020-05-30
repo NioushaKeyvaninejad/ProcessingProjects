@@ -18,8 +18,8 @@ int e3=300;                //ellipse3.x
 int eN=0;
 int iteration=0;
 int it=0;
-int tc=0;
-int kj=0;
+int tc=0;                  //zombie release timer/counter
+int kj=0;                  //"Game over" txt timer/counter
 
 void setup() {
   size(2000, 1600);
