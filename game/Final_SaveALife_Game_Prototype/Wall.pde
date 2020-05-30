@@ -10,9 +10,6 @@ class Wall {
     a[0]=tempA;
   }
 
-
-
-
   void move() {
 
     a[0]+=speed2;
@@ -27,17 +24,12 @@ class Wall {
     }
   }
 
-
-
-
   void display() {
-    fill(255, 0, 0);  
+    fill(150, 0, 50);  
     for (int i=1; i<7; i++) {
       y[i]=y[0]+i*200;
       rect(x[i], y[i], 200, 20);
       rect(a[i], y[i], -200, 20);
-
-  
     }
   }
 }

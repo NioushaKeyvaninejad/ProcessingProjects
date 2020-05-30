@@ -1,17 +1,19 @@
 class Runner {
-  float x=width/2;
-  float y=height-50;
+
+  float x=width/2-25;
+  float y=height-100;
   float yspeed;
   float xspeed;
+  PImage runnerImage;
 
   Runner() {
     yspeed = 8;
     xspeed = 8;
+    runnerImage = loadImage("Runner.png");
   }
 
   void display() {
-    fill(255);
-    ellipse(x, y, 50, 50);
+    image(runnerImage, x, y);
   }
 
   void move() {                       //arrowkeys functionality
@@ -40,7 +42,6 @@ class Runner {
 
   boolean hit(Wall walls) {            //if the runner hits a wall
     boolean mm=false;
-
     for (int i=1; i<7; i++) {
       if (y>(walls.y[i]) && y<(walls.y[i]+20)) {
         if (x>(walls.x[i]) && x<(walls.x[i]+200)) {

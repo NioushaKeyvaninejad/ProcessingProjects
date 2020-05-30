@@ -1,39 +1,29 @@
 class Button {                  //Game reset button---from Brush exercise.
   float x;
   float y;
-
-
+  PImage buttonImage;
+  PImage buttonImage2;
 
   boolean on;
   Button(float tempX, float tempY) {
     x = tempX;
     y = tempY;
     on=false;
+    buttonImage = loadImage("button.png");
+    buttonImage2 = loadImage("button2.png");
   }
-
-
-
 
   void display() {
-    ellipseMode(CORNER);
-    stroke(0);
-
     if (on) {
-      fill(255, 0, 0);
+      image(buttonImage, x, y);
       setup();
     } else {
-      fill(0, 255, 0);
+      image(buttonImage2, x, y);
     }
-    ellipse(x, y, 50, 50);
   }
 
-
-
-
-
   void click(int mx, int my) {
-
-    if (mx > x && mx < x + 50 && my > y && my < y + 50) {
+    if (mx > x && mx < x + 100 && my > y && my < y + 100) {
       on = !on;
     }
   }

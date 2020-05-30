@@ -4,6 +4,7 @@ class Zombie {                         //with the aid of: (Shiffman-pg:213)
   float y=random(120, height-200);     //range of movement
   float xspeed;
   float yspeed;
+  PImage zombieImage;
 
   Zombie() {
     if (random(width)<width/2) {       //releasing zombies from both sides
@@ -13,6 +14,7 @@ class Zombie {                         //with the aid of: (Shiffman-pg:213)
     }
     xspeed = random(-5, 5);            //moving forward && backward
     yspeed =random(-5, 5);             //moving upward && downward
+    zombieImage = loadImage("Zombie.png");
   }
 
   void move() {
@@ -27,8 +29,7 @@ class Zombie {                         //with the aid of: (Shiffman-pg:213)
   }
 
   void display() {
-    fill(0);
-    ellipse(x, y, 100, 100);
+    image(zombieImage, x, y);
   }
 
   boolean hit(Runner runner) {                            //hitting the runner
