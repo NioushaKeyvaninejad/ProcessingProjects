@@ -64,7 +64,7 @@ class Runner {
   }
 
   void reset() {                          //goes back to the start point
-    x=width/2;
-    y=height-50;
+    x=width/2-25;
+    y=height-100;
   }
 }
