@@ -1,4 +1,4 @@
-class Button {                  //Game reset button---from Brush exercise.
+class Button2 {                  //Game reset button---from Brush exercise.
   float x;
   float y;
 
@@ -6,7 +6,7 @@ class Button {                  //Game reset button---from Brush exercise.
   // PImage buttonImage2;
 
   boolean on;
-  Button(float tempX, float tempY) {
+  Button2(float tempX, float tempY) {
     x = tempX;
     y = tempY;
 
