@@ -19,41 +19,36 @@ Button2 backButton;
 //float[] spectrum = new float[bands];
 boolean startApp=false;
 int mm=0, nn=0;
-//AudioInput in;//http://code.compartmental.net/minim/audioinput_class_audioinput.html
+AudioInput in;//http://code.compartmental.net/minim/audioinput_class_audioinput.html
 
 void setup() {
   minim = new Minim(this);
 
+  in = minim.getLineIn();/////////////////////
   size(800, 600);
-  backButton = new Button2(400, 450);
+  backButton = new Button2(350, 550);
   chooseAsong = new Button[3];
   for (int i=0; i<chooseAsong.length; i++) {
     chooseAsong[i] = new Button(200+(i*200), 350);
   }
-
-
   song = minim.loadFile( "song1.mp3");
-  //song.play();
   fft = new FFT(song.bufferSize(), song.sampleRate());
 }
 void draw() { 
-  //background(255);
-
-  //if (startApp) {
   background(255);
   for (int i=0; i<chooseAsong.length; i++) {
     chooseAsong[i].display();
     if (chooseAsong[i].on) {
-
       background (200, 60, 80);
       backButton.display();
     }
   }
-  if (chooseAsong[0].on) {    
-    if (mm==0) {     
-      mm=1;     
-      song.close();   
-      song = minim.loadFile( "song1.mp3");
+  if (chooseAsong[0].on) {
+    if (mm==0) {
+      mm=1;
+      song.close();
+
+      song = minim.loadFile( "son1.mp3");
       song.play();
     }
 
@@ -63,10 +58,8 @@ void draw() {
       // draw the line for frequency band i, scaling it up a bit so we can see it
       line( i, height, i, height - fft.getBand(i)*8 );
     }
-    //for (int i = 0; i < bands; i++)
   }
-  if (chooseAsong[1].on) {   
-    // fft.analyze(spectrum);
+  if (chooseAsong[1].on) {
     if (nn==0) {
       //setup();
       nn=1;
@@ -77,6 +70,7 @@ void draw() {
       song.play();
     }
 
+    //fft = new FFT(song.bufferSize(), song.sampleRate());
     fft.forward(song.mix );
     for (int i = 0; i < fft.specSize(); i++)
     {
@@ -92,7 +86,13 @@ void keyPressed() {
   }
 }
 void mousePressed() {
+
   backButton.click(mouseX, mouseY);
+
+  if (backButton.on) {
+    song.close();
+    setup();
+  }
   for (int i=0; i<chooseAsong.length; i++) {
     chooseAsong[i].click(mouseX, mouseY);
     if (chooseAsong[i].on) {
@@ -103,4 +103,3 @@ void mousePressed() {
       break;
     }
   }
-}
