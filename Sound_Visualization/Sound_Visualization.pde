@@ -1,3 +1,7 @@
+//Songs Ref.: 
+//https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Yung_Kartz/July_2019/Yung_Kartz_-_07_-_Frontline.mp3
+
+//References:
 //https://processing.org/reference/libraries/sound/FFT.html
 //Shiffman-pg:458
 //http://code.compartmental.net/minim/fft_method_getband.html
@@ -5,62 +9,51 @@
 //https://forum.processing.org/two/discussion/28028/how-do-i-record-the-audio-input-to-a-new-audio-render-using-minim
 //*: //http://code.compartmental.net/minim/audioinput_class_audioinput.html
 
+//Importing Minim Library:
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 
 Minim minim;
-
+AudioInput in;           //*
+FFT fft;                 //For Audio
+FFT fft2;                //For Songs
 Particle[] particles ;
-FFT fft;
-FFT fft2;
 AudioPlayer song;
-
-Button[] chooseAsong;
+Button[] chooseAsong;    //Main buttons
 Button2 backButton;
 
 boolean startApp=false;
-int mm=0, nn=0, kk=0;
-int particlesNum = 500;
+int mm=0, nn=0, kk=0;   //I defined these counters to make sure each song will be played once and it will close the previous playing song
+int particlesNum = 200; //Number of moving particles
 int lapse = 0;
-
+int ll=0, bb=0, dd=0;   //These has been used to allocate each song frequencies to a random particle 
+int xx=0;
 float[] speed = new float[particlesNum]; 
-AudioSource in;    //*
-void setup() {
-  size(800, 600);
 
+void setup() {
+  minim = new Minim(this);
+  in = minim.getLineIn();   //Getting an AudioInput
+  fft = new FFT( in.bufferSize(), in.sampleRate() );  //Audio
+  size(800, 600);
   particles = new Particle[particlesNum];         
   for (int i=0; i<particles.length; i++) {
     particles[i] = new Particle();
   }
-
-  minim = new Minim(this);
-
-  in = minim.getLineIn();/////////////////////
   backButton = new Button2(350, 550);
-  chooseAsong = new Button[3];
+  chooseAsong = new Button[3]; //Three main buttons
   for (int i=0; i<chooseAsong.length; i++) {
     chooseAsong[i] = new Button(200+(i*200), 350);
   }
-
-  song = minim.loadFile( "song1.mp3");
-  //song.play();
-  fft = new FFT(song.bufferSize(), song.sampleRate());
-  in = minim.getLineIn();
-
-  fft2 = new FFT(in.bufferSize(), in.sampleRate());
+  song = minim.loadFile( "Yung_Kartz_-_07_-_Frontline.mp3"); //First song
+  fft2 = new FFT(song.bufferSize(), song.sampleRate());       //Songs
 }
-void draw() { 
-  //background(255);
 
-  //if (startApp) {
+void draw() { 
   background(255);
   for (int i=0; i<chooseAsong.length; i++) {
     chooseAsong[i].display();
-    if (chooseAsong[i].on) {
-
+    if (chooseAsong[i].on) {   //Changing background and showing particles.
       background (200, 60, 80);
-
-
       for (int j = 0; j < particles.length; j++) {
         particles[j].move(speed[j]);
         particles[j].display();
@@ -68,81 +61,82 @@ void draw() {
       backButton.display();
     }
   }
-  if (chooseAsong[0].on) {
+  if (chooseAsong[0].on) {     //If the first button was clicked (playing the first song once)
     if (mm==0) {
       mm=1;
       song.close();
-      song = minim.loadFile( "song1.mp3");
+      song = minim.loadFile( "Yung_Kartz_-_07_-_Frontline.mp3");
       song.play();
     }
-
-    fft.forward( song.mix );
-    for (int i = 0; i < particlesNum; i++)
+    //getting frequencies and giving it to particles' speed (2 different groups):
+    fft2.forward( song.mix );        
+    ll=floor(random(particlesNum));  //Rounding the random number
+    for (int i = ll; i < particlesNum; i++)
     {
-      print(fft.specSize(), "  ");
-      speed[i]=fft.getBand(i)*8;
+      speed[i-ll]=map(fft2.getBand(i)*8, 0, 20, 0, 3);
+    }
+    for (int i = 0; i < ll; i++)
+    {
+      speed[i+particlesNum-ll]=map(fft2.getBand(i)*8, 0, 20, 0, 3);
     }
   }
   if (chooseAsong[1].on) {
-    print("kmkm");
     if (nn==0) {
-      //setup();
       nn=1;
       if (song.isPlaying()) {
         song.close();
       }
-      song = minim.loadFile( "song2.mp3");
+      song = minim.loadFile( "Yung_Kartz_-_05_-_Picture_Perfect.mp3");   //second song
       song.play();
     }
-    fft.forward(song.mix );
-    for (int i = 0; i < fft.specSize(); i++)
+    fft2.forward( song.mix );                 //Same thing for the second song
+    bb=floor(random(particlesNum));
+    for (int i = bb; i < particlesNum; i++)
     {
-      // draw the line for frequency band i, scaling it up a bit so we can see it
-      line( i, height, i, height - fft.getBand(i)*8 );
+      speed[i-bb]=map(fft2.getBand(i)*8, 0, 20, 0, 3);
+    }
+    for (int i = 0; i < bb; i++)
+    {
+      speed[i+particlesNum-bb]=map(fft2.getBand(i)*8, 0, 20, 0, 3);
     }
   }
-  if (chooseAsong[2].on) {
-    //print("onnn");
+  if (chooseAsong[2].on) {  //Third button (Audio)
     if (kk==0) {
       kk=1;
-      //in.close();
-      song.close();
-      in = minim.getLineIn();
-      print(" nm bb ");
-      //in.enableMonitoring();
     }
-    fft2.forward(in.mix );
-
-    for (int i = 0; i < fft2.specSize(); i++)
-    {
-      // draw the line for frequency band i, scaling it up a bit so we can see it
-      line( i, height, i, height - fft2.getBand(i)*8);
+    stroke(255, 0, 0);
+    fft.forward( in.mix );
+    dd=floor(random(particlesNum));
+    for (int i = dd; i < particlesNum; i++) {
+      speed[i-dd]=map(fft.getBand(i)*8, 0, 20, 0, 50);
+    }
+    for (int i = 0; i < dd; i++) {
+      speed[i+particlesNum-dd]=map(fft.getBand(i)*8, 0, 20, 0, 50);
     }
   }
 }
-void mousePressed() {
-  if (frameCount - lapse > 15) {
-    //save('pix.jpg');
-    lapse = frameCount;
-  }
 
-
-
+void mousePressed() {               //For back button function
   backButton.click(mouseX, mouseY);
-
   if (backButton.on) {
     song.close();
+    in.close();
+    for (int i=0; i<chooseAsong.length; i++) {
+      chooseAsong[i].on=false;
+    }
+    mm=0;
+    nn=0;
+    kk=0;
     setup();
   }
-  for (int i=0; i<chooseAsong.length; i++) {
+  for (int i=0; i<chooseAsong.length; i++) {        //When a button was clicked, shows the back button and disappear other buttons on the main menu.
     chooseAsong[i].click(mouseX, mouseY);
     if (chooseAsong[i].on) {
       for (int j=0; j<chooseAsong.length; j++) {
         chooseAsong[j].disappear();
       }
       backButton.display();
-
-      break;
+      break;            //To reduce latency
     }
   }
 }

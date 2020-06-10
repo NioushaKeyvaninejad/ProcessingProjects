@@ -2,7 +2,6 @@
 
 class Particle {
   float opacity=80;
-
   color c1 = #FF0000;
   color c2 = #FFC000;
   color c3 = #E0FF00;
@@ -20,40 +19,41 @@ class Particle {
   color c15 = #FF007C;
   color c16 = #1000FF;
   color c17 = #FFFFFF;
-
-
-  color[] colors  = {  
+  color[] colors  = {   //Colors Array
     c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17
   };
-
-
   int N, col;
   float size, x, y, speed, sign;
   color c;
+
   Particle() {
     size = random(5, 100);
     x = random(width / 2 - width / 2, width / 2 + width / 2 - size);
     y = random(height / 2 - height / 2, height / 2 + height / 2 - size);
-
-    speed = random(1, 3);
-    sign = random(1) >= 0.5 ? -1 : 1;
-
+    //Randomly changing the speed direction:
+    sign = random(1) >= 0.5 ? -1 : 1; //https://processing.org/reference/conditional.html
     N = floor(random(2));
-    // c = Palette;
     col=floor(random(17));
     c = colors[col];
   }
 
-  void move(float speed) {
+  void move(float speed) { //Particles' movement according to the songs/Audio
     if (N == 0) {
       x += sign * speed;
     } else {
       y += sign * speed;
     }
-
-    if (x < width / 2 - width / 2 || x > width / 2 + width / 2 - size ||
-      y < height / 2 - height / 2 || y > height / 2 + height / 2 - size) {
-      speed *= -1;
+    if (x < 0) {
+      x= x+width;
+    }
+    if (x > width) {
+      x= x-width;
+    }
+    if (y < 0) {
+      y= y+height;
+    }
+    if (y > height) {
+      y= y-height;
     }
   }
 
