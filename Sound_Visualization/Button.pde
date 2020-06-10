@@ -20,6 +20,7 @@ class Button {                  //Game reset button---from Brush exercise.
     fill(0, 255, 0);
 
     if (on) {
+      //print("onnnn1");
     }
 
     ellipse(x, y, 100, 100);
