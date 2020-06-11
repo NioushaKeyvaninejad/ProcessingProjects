@@ -42,18 +42,18 @@ void setup() {
   backButton = new Button2(350, 550);
   chooseAsong = new Button[3]; //Three main buttons
   for (int i=0; i<chooseAsong.length; i++) {
-    chooseAsong[i] = new Button(200+(i*200), 350);
+    chooseAsong[i] = new Button(150+(i*200), 350);
   }
   song = minim.loadFile( "Yung_Kartz_-_07_-_Frontline.mp3"); //First song
   fft2 = new FFT(song.bufferSize(), song.sampleRate());       //Songs
 }
 
 void draw() { 
-  background(255);
+  background(loadImage("Background.jpg"));
   for (int i=0; i<chooseAsong.length; i++) {
     chooseAsong[i].display();
     if (chooseAsong[i].on) {   //Changing background and showing particles.
-      background (200, 60, 80);
+      background (0,10);
       for (int j = 0; j < particles.length; j++) {
         particles[j].move(speed[j]);
         particles[j].display();
